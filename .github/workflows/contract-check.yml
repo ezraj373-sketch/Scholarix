@@ -1,0 +1,29 @@
+name: Contract Validation
+
+on:
+  push:
+    branches: [ main, development ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  contract-validation:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Setup Clarinet
+      uses: hirosystems/clarinet-action@v1
+      with:
+        clarinet-version: "2.0.0"
+    
+    - name: Run contract syntax check
+      run: clarinet check
+    
+    - name: Install dependencies
+      run: npm install
+    
+    - name: Run contract tests
+      run: npm test
